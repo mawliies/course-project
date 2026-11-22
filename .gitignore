@@ -66,3 +66,18 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+# Папки сборки и кэша Visual Studio
+x64/
+x86/
+Debug/
+Release/
+.vs/
+
+# Временные и пользовательские файлы
+*.user
+*.suo
+*.obj
+*.pdb
+*.idb
+*.exe
+*.ilk
