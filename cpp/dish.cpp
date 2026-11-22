@@ -1,0 +1,22 @@
+#include"dish.h"
+Dish::Dish(std::string title, float price, std::string category, const Recipe& recipe, int time, int weight) :MenuObject(title, price, category, recipe) {
+	this->cookingTime = time;
+	this->weight = weight;
+}
+int Dish::getTime()const {
+	return this->cookingTime;
+}
+int Dish::getWeight()const {
+	return this->weight;
+}
+std::string Dish::getType()const {
+	return "Dish";
+}
+void Dish::printInfo()const {
+	MenuObject::printInfo();
+	std::cout << "\nThe weight: " << this->getWeight() << " g";
+	std::cout << "\nCooking time: " << this->getTime() << " min\n";
+}
+Dish::~Dish() {
+	std::cout << this->getTitle() << " :the dish have been deleted.\n";
+}
