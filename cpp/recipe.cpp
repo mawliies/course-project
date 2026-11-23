@@ -1,17 +1,22 @@
 #include "recipe.h"
+#include "AllExceptions.h"
 Recipe::Recipe(int portions) {
-	//!=0<0
-	this->portions = portions;
+	setPortions(portions);
 }
 void Recipe::addIngredient(float amount, std::string name, const IngredientCatalog& catalog) {
+	if (name.empty())
+		throw InvalidDataException("Ingredient name cannot be empty");
+	if (amount <= 0)
+		throw InvalidAmountException("Ingredient amount must be positive");
+
 	const Ingredient* check = catalog.findByName(name);
-	if (check == nullptr) {
-		//nullptr
-	}
+
+	if (check == nullptr) 
+		throw NotFoundException(name);
 	for (int i = 0; i < ingredientsRecipe.size(); i++)
-		if (ingredientsRecipe[i].name == name) {
-			//дублирование
-		}
+		if (ingredientsRecipe[i].name == name) 
+			throw DuplicateDataException(name);
+
 	ResipeIngredient newIngredient;
 	newIngredient.name = name;
 	newIngredient.amount = amount;
@@ -23,7 +28,7 @@ void Recipe::removeIngredient(std::string name) {
 			ingredientsRecipe.erase(ingredientsRecipe.begin() + i);
 			return;
 		}
-	//nullptr	
+	throw NotFoundException(name);
 }
 std::ostream& operator<<(std::ostream& os, const Recipe& recipe) {
 	os << "\nPortions: " << recipe.portions;
@@ -43,9 +48,10 @@ NutritionValue Recipe::calculateNutrition(const IngredientCatalog& catalog) cons
 	float carbs = 0;
 	for (int i = 0; i < ingredientsRecipe.size(); i++) {
 		const Ingredient* ingredient = catalog.findByName(ingredientsRecipe[i].name);
-		if (ingredient == nullptr) {
-			//nullptr
-		}
+
+		if (ingredient == nullptr) 
+			throw NotFoundException(ingredientsRecipe[i].name);
+
 		NutritionValue nutrition = ingredient->getNutrition();
 		float coefficient = ingredientsRecipe[i].amount / 100.0f;
 		cal += nutrition.getCalories() * coefficient;
@@ -64,6 +70,7 @@ int Recipe::getPortions()const {
 	return this->portions;
 }
 void Recipe::setPortions(int portions) {
-	//!0<0
+	if (portions <= 0)
+		throw InvalidAmountException("Number of portions must be positive");
 	this->portions = portions;
 }

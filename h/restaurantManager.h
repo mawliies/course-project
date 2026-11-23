@@ -34,18 +34,22 @@ public:
 	void printMainMenu() const;
 	void printSeasonalMenu() const;
 	bool isSeasonalMenuAvailable() const;
-
 	void setMainMenuUpdateDate(int dd, int mm, int yyyy);
 	void setSeasonalMenuPeriod(int ddBegin, int mmBegin, int yyyyBegin, int ddEnd, int mmEnd, int yyyyEnd);
 
 	void addPerson(Person* person);
 	void removePerson(const std::string& phoneNumber);
-	Person* findPerson(const std::string& phoneNumber) const;
-	void printPeople() const;
+	Person* findPerson(const std::string& phoneNumber);
+	void printPeople(std::ostream& os) const;
 
-	std::size_t createOrder();
-	void addItemToOrder(std::size_t orderIndex, const std::string& itemName, int amount);
-	void removeItemFromOrder(std::size_t orderIndex, const std::string& itemName);
-	float calculateOrderTotal(std::size_t orderIndex) const;
-	void changeOrderStatus(std::size_t orderIndex,OrderStatus status);
+	void addOrder(const Order& order);
+	void removeOrder(int index);
+	Order& findOrder(int index);
+	const Order& findOrder(int index) const;
+	void addItemToOrder(int orderIndex, const MenuObject& object, int amount);
+	void removeItemFromOrder(int orderIndex, const std::string& name);
+	float calculateOrderTotal(int orderIndex) const;
+	void setOrderStatus(int orderIndex, OrderStatus status);
+	OrderStatus getOrderStatus(int orderIndex) const;
+	int getOrdersCount() const;
 };

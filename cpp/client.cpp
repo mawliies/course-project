@@ -1,12 +1,16 @@
 #include "client.h"
+#include "InvalidDataException.h"
 Client::Client(std::string name, std::string lastName, std::string middleName, std::string phoneNumber, int bonus) :Person(name, lastName, middleName, phoneNumber) {
+	if(bonus<0)
+		throw InvalidDataException("Bonus points cannot be negative");
 	this->bonus = bonus;
 }
 int Client::getBonus() const{
 	return this->bonus;
 }
 void Client::setBonus(int bonus) {
-	//>=0
+	if (bonus < 0)
+		throw InvalidDataException("Bonus points cannot be negative");
 	this->bonus = bonus;
 }
 std::string Client::getType() const{

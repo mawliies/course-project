@@ -1,5 +1,10 @@
 #include"dish.h"
+#include "InvalidAmountException.h"
 Dish::Dish(std::string title, float price, std::string category, const Recipe& recipe, int time, int weight) :MenuObject(title, price, category, recipe) {
+	if (time < 0)
+		throw InvalidAmountException("Cooking time cannot be negative");
+	if (weight <= 0)
+		throw InvalidAmountException("Dish weight must be positive");
 	this->cookingTime = time;
 	this->weight = weight;
 }

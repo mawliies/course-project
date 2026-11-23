@@ -1,5 +1,8 @@
 #include"drink.h"
+#include "InvalidAmountException.h"
 Drink::Drink(std::string title, float price, std::string category, const Recipe& recipe, int volumeML, bool isCold) :MenuObject(title, price, category, recipe) {
+	if (volumeML <= 0)
+		throw InvalidAmountException("Drink volume must be positive");
 	this->volumeML = volumeML;
 	this->isCold = isCold;
 }

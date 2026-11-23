@@ -1,9 +1,8 @@
 #include "mainMenu.h"
+#include "InvalidDateException.h"
 MainMenu::MainMenu() : dd(0), mm(0), yyyy(0) {}
 MainMenu::MainMenu(int dd, int mm, int yyyy) {
-	this->dd = dd;
-	this->mm = mm;
-	this->yyyy = yyyy;
+    setDate(dd, mm, yyyy);
 }
 int MainMenu::getDay()const {
 	return this->dd;
@@ -15,6 +14,11 @@ int MainMenu::getYear()const {
 	return this->yyyy;
 }
 void MainMenu::setDate(int dd, int mm, int yyyy) {
+    if (yyyy <= 0 || mm < 1 || mm > 12 || dd < 1)
+        throw InvalidDateException("Invalid date");
+    if (dd > daysInMonth(mm, yyyy))
+        throw InvalidDateException("Day does not exist in this month");
+
 	this->dd = dd;
 	this->mm = mm;
 	this->yyyy = yyyy;

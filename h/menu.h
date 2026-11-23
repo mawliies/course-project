@@ -16,3 +16,7 @@ public:
 	virtual bool isAvailable()const = 0;
 	virtual ~Menu();
 };
+
+bool isLeapYear(int year);
+int daysInMonth(int month, int year);
+bool isValidDate(int dd, int mm, int yyyy);

@@ -76,7 +76,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)h;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\уник\пнаяву\курса\course-project\course-project\h;C:\уник\пнаяву\курса\course-project\course-project\h\exceptions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -91,7 +91,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)h;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\уник\пнаяву\курса\course-project\course-project\h;C:\уник\пнаяву\курса\course-project\course-project\h\exceptions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -104,7 +104,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)h;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\уник\пнаяву\курса\course-project\course-project\h;C:\уник\пнаяву\курса\course-project\course-project\h\exceptions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -119,7 +119,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)h;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\уник\пнаяву\курса\course-project\course-project\h;C:\уник\пнаяву\курса\course-project\course-project\h\exceptions;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,12 +134,15 @@
     <ClCompile Include="cpp\ingredient.cpp" />
     <ClCompile Include="cpp\ingredientCatalog.cpp" />
     <ClCompile Include="cpp\main.cpp" />
+    <ClCompile Include="cpp\mainMenu.cpp" />
+    <ClCompile Include="cpp\menu.cpp" />
     <ClCompile Include="cpp\menuObject.cpp" />
     <ClCompile Include="cpp\nutritionValue.cpp" />
     <ClCompile Include="cpp\order.cpp" />
     <ClCompile Include="cpp\person.cpp" />
     <ClCompile Include="cpp\recipe.cpp" />
     <ClCompile Include="cpp\restaurantManager.cpp" />
+    <ClCompile Include="cpp\seasonalMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="h\client.h" />
@@ -147,6 +150,18 @@
     <ClInclude Include="h\dish.h" />
     <ClInclude Include="h\drink.h" />
     <ClInclude Include="h\employee.h" />
+    <ClInclude Include="h\exceptions\AllExceptions.h" />
+    <ClInclude Include="h\exceptions\DuplicateDataException.h" />
+    <ClInclude Include="h\exceptions\InvalidAmountException.h" />
+    <ClInclude Include="h\exceptions\InvalidDataException.h" />
+    <ClInclude Include="h\exceptions\InvalidDateException.h" />
+    <ClInclude Include="h\exceptions\InvalidDateRangeException.h" />
+    <ClInclude Include="h\exceptions\InvalidOperationException.h" />
+    <ClInclude Include="h\exceptions\InvalidPhoneNumberException.h" />
+    <ClInclude Include="h\exceptions\InvalidPriceException.h" />
+    <ClInclude Include="h\exceptions\NotFoundException.h" />
+    <ClInclude Include="h\exceptions\OutOfRangeException.h" />
+    <ClInclude Include="h\exceptions\RestaurantExceptions.h" />
     <ClInclude Include="h\ingredient.h" />
     <ClInclude Include="h\ingredientCatalog.h" />
     <ClInclude Include="h\mainMenu.h" />

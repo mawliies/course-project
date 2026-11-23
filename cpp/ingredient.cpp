@@ -1,9 +1,11 @@
 #include "ingredient.h"
+#include "InvalidDataException.h"
 #include <iostream>
 Ingredient::Ingredient(std::string name, const NutritionValue& nutritionPer100, MeasureUnit unit) : name(name), nutritionPer100(nutritionPer100), unit(unit) {
-	this->name = name;
-	this->nutritionPer100 = nutritionPer100;
-	this->unit = unit;
+	if (name.empty())
+		throw InvalidDataException("Ingredient name cannot be empty");
+	if (unit != MeasureUnit::gram && unit != MeasureUnit::milliliter)
+		throw InvalidDataException("Invalid ingredient measure unit");
 }
 std::string Ingredient::getName() const{
 	return this->name;

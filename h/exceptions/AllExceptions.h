@@ -1,0 +1,11 @@
+#pragma once
+#include"InvalidDataException.h"
+#include"InvalidOperationException.h"
+#include"InvalidPhoneNumberException.h"
+#include"InvalidDateException.h"
+#include"InvalidDateRangeException.h"
+#include"InvalidPriceException.h"
+#include"InvalidAmountException.h"
+#include"OutOfRangeException.h"
+#include"DuplicateDataException.h"
+#include"NotFoundException.h"

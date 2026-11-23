@@ -1,4 +1,5 @@
 #include "nutritionValue.h"
+#include "InvalidDataException.h"
 NutritionValue::NutritionValue(float calories, float protein, float fats, float carbs) {
     this->calories = calories;
     this->protein = protein;
@@ -18,6 +19,8 @@ float NutritionValue::getCarbs() const {
     return this->carbs;
 }
 void NutritionValue::setNutrition(float cal, float proteins, float fats, float carbs) {
+    if (cal < 0 || proteins < 0 || fats < 0 || carbs < 0)
+        throw InvalidDataException("Nutrition values cannot be negative");
     this->calories = cal;
     this->protein = proteins;
     this->fats = fats;
@@ -25,7 +28,6 @@ void NutritionValue::setNutrition(float cal, float proteins, float fats, float c
 }
 std::istream& operator>>(std::istream& is, NutritionValue& nutrition) {
     float cals, proteins, fats, carbs;
-    //nullptr
     if(is>>cals>>proteins>>fats>>carbs)
         nutrition.setNutrition(cals, proteins, fats, carbs);
     return is;
