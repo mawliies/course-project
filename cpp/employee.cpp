@@ -15,13 +15,9 @@ void Employee::assignShift(std::string newShift) {
 std::string Employee::getShift()const {
 	return this->shift;
 }
-void Employee::printInfo()const {
-	Person::printInfo();
-	std::cout << "\nThe shift: " << this->getShift() << "\nActual work position: " << this->getPosition();
-}
-std::ostream& operator<<(std::ostream& os, Employee& object) {
-	object.printInfo();
-	return os;
+void Employee::printInfo(std::ostream& os)const {
+	Person::printInfo(os);
+	os << "\nThe shift: " << this->getShift() << "\nActual work position: " << this->getPosition();
 }
 Employee::~Employee(){
 	std::cout << this->getFullName() << ": object employee successfuly deleted.\n";

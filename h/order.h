@@ -22,7 +22,7 @@ private:
 	std::vector<OrderItem>items;
 	OrderStatus status;
 public:
-	Order();
+	Order(OrderStatus status = OrderStatus::Draft);
 	void addItem(const MenuObject& object, int amount);
 	void removeItem(std::string name);
 	float calculateTotal()const;

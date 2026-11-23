@@ -13,9 +13,13 @@ std::string Person::getFullName() const{
 std::string Person::getPhoneNumber() const{
 	return this->phoneNumber;
 }
-void Person::printInfo() const{
-	std::cout << "\nName: " << getFullName() << "\nPhone number: " << getPhoneNumber();
+void Person::printInfo(std::ostream& os) const{
+	os << "\nName: " << getFullName() << "\nPhone number: " << getPhoneNumber();
 }
 Person::~Person() {
 	std::cout << "Class Person successfully have been deleted.\n";
+}
+std::ostream& operator<<(std::ostream& os, const Person& object) {
+	object.printInfo(os);
+	return os;
 }

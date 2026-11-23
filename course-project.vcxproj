@@ -128,12 +128,17 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cpp\client.cpp" />
+    <ClCompile Include="cpp\dish.cpp" />
+    <ClCompile Include="cpp\drink.cpp" />
     <ClCompile Include="cpp\employee.cpp" />
     <ClCompile Include="cpp\ingredient.cpp" />
     <ClCompile Include="cpp\ingredientCatalog.cpp" />
     <ClCompile Include="cpp\main.cpp" />
+    <ClCompile Include="cpp\menuObject.cpp" />
     <ClCompile Include="cpp\nutritionValue.cpp" />
+    <ClCompile Include="cpp\order.cpp" />
     <ClCompile Include="cpp\person.cpp" />
+    <ClCompile Include="cpp\recipe.cpp" />
     <ClCompile Include="cpp\restaurantManager.cpp" />
   </ItemGroup>
   <ItemGroup>

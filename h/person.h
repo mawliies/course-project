@@ -10,7 +10,7 @@ public:
 	std::string getFullName()const;
 	std::string getPhoneNumber()const;
 	virtual std::string getType()const = 0;
-	virtual void printInfo()const;
+	virtual void printInfo(std::ostream& os)const;
 	virtual ~Person();
 };
-	
+std::ostream& operator<<(std::ostream& os, const Person& object);

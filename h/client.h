@@ -8,7 +8,6 @@ public:
 	int getBonus()const;
 	void setBonus(int bonus);
 	std::string getType()const override;
-	void printInfo()const override;
-	friend std::ostream& operator<<(std::ostream& os, Client& object);
+	void printInfo(std::ostream& os)const override;
 	~Client();
 };
