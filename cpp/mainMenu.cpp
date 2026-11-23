@@ -1,4 +1,5 @@
 #include "mainMenu.h"
+MainMenu::MainMenu() : dd(0), mm(0), yyyy(0) {}
 MainMenu::MainMenu(int dd, int mm, int yyyy) {
 	this->dd = dd;
 	this->mm = mm;

@@ -1,5 +1,5 @@
 #include "order.h"
-Order::Order(OrderStatus status) : status(status) {}
+Order::Order(const std::string& clientPhoneNumber, OrderStatus status) : clientPhoneNumber(clientPhoneNumber), status(status) {}
 void Order::addItem(const MenuObject& object, int amount) {
 	if (amount <= 0) {
 		//
@@ -23,6 +23,9 @@ float Order::calculateTotal()const {
 	for (int i = 0; i < items.size(); i++)
 		total += items[i].amount * items[i].priceAtOrder;
 	return total;
+}
+std::string Order::getClientPhoneNumber() const {
+	return this->clientPhoneNumber;
 }
 OrderStatus Order::getStatus()const {
 	return this->status;

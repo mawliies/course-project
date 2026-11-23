@@ -7,6 +7,7 @@ private:
 	int ddEnd, mmEnd, yyyyEnd;
 public:
 	SeasonalMenu();
+	SeasonalMenu(int ddBegin, int mmBegin, int yyyyBegin, int ddEnd, int mmEnd, int yyyyEnd);
 	int getDayBegin()const;
 	int getMonthBegin()const;
 	int getYearBegin()const;

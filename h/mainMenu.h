@@ -4,6 +4,7 @@ class MainMenu :public Menu {
 private:
 	int dd, mm, yyyy;
 public:
+	MainMenu();
 	MainMenu(int dd, int mm, int yyyy);
 	int getDay()const;
 	int getMonth()const;

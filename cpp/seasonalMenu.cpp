@@ -1,5 +1,13 @@
 #include "seasonalMenu.h"
-SeasonalMenu::SeasonalMenu() : ddBegin(0), mmBegin(0), yyyyBegin(0),ddEnd(0), mmEnd(0), yyyyEnd(0) {}
+SeasonalMenu::SeasonalMenu(): ddBegin(0), mmBegin(0), yyyyBegin(0),ddEnd(0), mmEnd(0), yyyyEnd(0) {}
+SeasonalMenu::SeasonalMenu(int ddBegin, int mmBegin, int yyyyBegin, int ddEnd, int mmEnd, int yyyyEnd) {
+	this->ddBegin = ddBegin;
+	this->mmBegin = mmBegin;
+	this->yyyyBegin = yyyyBegin;
+	this->ddEnd = ddEnd;
+	this->mmEnd = mmEnd;
+	this->yyyyEnd = yyyyEnd;
+}
 int SeasonalMenu::getDayBegin()const {
 	return this->ddBegin;
 }

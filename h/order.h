@@ -20,12 +20,14 @@ enum class OrderStatus {
 class Order {
 private:
 	std::vector<OrderItem>items;
+	std::string clientPhoneNumber;
 	OrderStatus status;
 public:
-	Order(OrderStatus status = OrderStatus::Draft);
+	Order(const std::string& clientPhoneNumber, OrderStatus status = OrderStatus::Draft);
 	void addItem(const MenuObject& object, int amount);
 	void removeItem(std::string name);
 	float calculateTotal()const;
+	std::string getClientPhoneNumber() const;
 	OrderStatus getStatus()const;
 	void setStatus(OrderStatus status);
 	~Order();
