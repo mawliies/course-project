@@ -11,7 +11,7 @@ void Menu::addToMenu(MenuObject* object) {
 }
 const MenuObject* Menu::findInMenu(const std::string& name)const {
 	for (int i = 0; i < items.size(); i++)
-		if (items[i]->getTitle() == name)
+		if (items[i] != nullptr && items[i]->getTitle() == name)
 			return items[i];
 	return nullptr;
 }
@@ -25,6 +25,17 @@ void Menu::removeFromMenu(std::string name) {
 			items.erase(items.begin() + i);
 			return;
 		}
+}
+std::vector<const MenuObject*> Menu::getItems() const {
+	std::vector<const MenuObject*> result;
+
+	for (const auto* item : items) {
+		if (item != nullptr) {
+			result.push_back(item);
+		}
+	}
+
+	return result;
 }
 void Menu::printMenu()const {
 	if (items.empty()) {

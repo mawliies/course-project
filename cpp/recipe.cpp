@@ -14,12 +14,12 @@ void Recipe::addIngredient(float amount, std::string name, const IngredientCatal
 	if (check == nullptr) 
 		throw NotFoundException(name);
 	for (int i = 0; i < ingredientsRecipe.size(); i++)
-		if (ingredientsRecipe[i].name == name) 
+		if (ingredientsRecipe[i].ingredientId == check->getId()) 
 			throw DuplicateDataException(name);
-
-	ResipeIngredient newIngredient;
-	newIngredient.name = name;
+	RecipeIngredient newIngredient;
+	newIngredient.name = check->getName();
 	newIngredient.amount = amount;
+	newIngredient.ingredientId = check->getId();
 	ingredientsRecipe.push_back(newIngredient);
 }
 void Recipe::removeIngredient(std::string name) {
@@ -38,8 +38,10 @@ std::ostream& operator<<(std::ostream& os, const Recipe& recipe) {
 		os << recipe.ingredientsRecipe[i].name << " - ";
 		os << recipe.ingredientsRecipe[i].amount << "\n";
 	}
-
 	return os;
+}
+const std::vector<RecipeIngredient>& Recipe::getIngredients() const {
+	return ingredientsRecipe;
 }
 NutritionValue Recipe::calculateNutrition(const IngredientCatalog& catalog) const{
 	float cal = 0;
@@ -47,7 +49,7 @@ NutritionValue Recipe::calculateNutrition(const IngredientCatalog& catalog) cons
 	float fats = 0;
 	float carbs = 0;
 	for (int i = 0; i < ingredientsRecipe.size(); i++) {
-		const Ingredient* ingredient = catalog.findByName(ingredientsRecipe[i].name);
+		const Ingredient* ingredient = catalog.findById(ingredientsRecipe[i].ingredientId);
 
 		if (ingredient == nullptr) 
 			throw NotFoundException(ingredientsRecipe[i].name);

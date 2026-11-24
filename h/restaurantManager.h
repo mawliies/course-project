@@ -20,6 +20,13 @@ public:
 	RestaurantManager();
 	~RestaurantManager();
 
+	const IngredientCatalog& getCatalog()const;
+	const MainMenu& getMainMenu()const;
+	const SeasonalMenu& getSeasonalMenu()const;
+	const Collection<Person*>& getPeople()const;
+	const std::vector<Order>& getOrders()const;
+	void setNextIngredientId(int nextId);
+
 	void addIngredient(const Ingredient& ingredient);
 	void removeIngredient(const std::string& name);
 	const Ingredient* findIngredient(const std::string& name) const;
@@ -36,6 +43,7 @@ public:
 	bool isSeasonalMenuAvailable() const;
 	void setMainMenuUpdateDate(int dd, int mm, int yyyy);
 	void setSeasonalMenuPeriod(int ddBegin, int mmBegin, int yyyyBegin, int ddEnd, int mmEnd, int yyyyEnd);
+	std::vector<const MenuObject*> getAvailableMenuItems() const;
 
 	void addPerson(Person* person);
 	void removePerson(const std::string& phoneNumber);

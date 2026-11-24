@@ -7,6 +7,9 @@ protected:
 	std::string phoneNumber;
 public:
 	Person(std::string name, std::string lastName, std::string middleName, std::string phoneNumber);
+	std::string getFirstName()const;
+	std::string getLastName()const;
+	std::string getMiddlelName()const;
 	std::string getFullName()const;
 	std::string getPhoneNumber()const;
 	virtual std::string getType()const = 0;

@@ -25,6 +25,15 @@ Person::Person(std::string name, std::string lastName, std::string middleName, s
 	if (name.empty() || lastName.empty()) 
 		throw InvalidDataException("Name and last name cannot be empty");
 }
+std::string Person::getFirstName()const {
+	return this->name;
+}
+std::string Person::getLastName()const {
+	return this->lastName;
+}
+std::string Person::getMiddlelName()const {
+	return this->middleName;
+}
 std::string Person::getFullName() const{
 	if (middleName.empty())
 		return this->lastName + " " + this->name;

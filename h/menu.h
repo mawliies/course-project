@@ -7,10 +7,10 @@ class Menu {
 protected:
 	std::vector<MenuObject*>items;
 public:
-	//хранение будет в файлах, это мы сделаем попозже, вместе с исключениями
 	Menu();
 	void addToMenu(MenuObject* object);
 	void removeFromMenu(std::string name);
+	std::vector<const MenuObject*> getItems() const;
 	const MenuObject* findInMenu(const std::string& name)const;
 	virtual void printMenu()const;
 	virtual bool isAvailable()const = 0;

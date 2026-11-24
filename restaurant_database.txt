@@ -1,0 +1,57 @@
+RESTAURANT_DATABASE
+VERSION 1
+INGREDIENTS
+4
+2
+1
+"Flour"
+364 10 1 76
+0
+2
+"Sugar"
+387 0 0 100
+0
+MAIN_MENU
+24 11 2026
+1
+"Dish"
+"Homemade Pizza"
+15.5
+"Main course"
+2
+2
+1 200 "Flour"
+2 50 "Sugar"
+30 450
+SEASONAL_MENU
+1 6 2026 31 8 2026
+1
+"Drink"
+"Fresh Lemonade"
+5
+"Drink"
+1
+0
+500 1
+PEOPLE
+2
+"Client"
+"Ivan"
+"Ivanov"
+"Ivanovich"
+"+375291111111"
+150
+"Employee"
+"Petr"
+"Petrov"
+"Petrovich"
+"+375331234567"
+"Morning"
+"Cook"
+ORDERS
+1
+"+375291111111"
+1
+1
+"Homemade Pizza"
+2 14.25

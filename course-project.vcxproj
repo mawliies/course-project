@@ -131,6 +131,7 @@
     <ClCompile Include="cpp\dish.cpp" />
     <ClCompile Include="cpp\drink.cpp" />
     <ClCompile Include="cpp\employee.cpp" />
+    <ClCompile Include="cpp\fileManager.cpp" />
     <ClCompile Include="cpp\ingredient.cpp" />
     <ClCompile Include="cpp\ingredientCatalog.cpp" />
     <ClCompile Include="cpp\main.cpp" />
@@ -162,6 +163,7 @@
     <ClInclude Include="h\exceptions\NotFoundException.h" />
     <ClInclude Include="h\exceptions\OutOfRangeException.h" />
     <ClInclude Include="h\exceptions\RestaurantExceptions.h" />
+    <ClInclude Include="h\fileManager.h" />
     <ClInclude Include="h\ingredient.h" />
     <ClInclude Include="h\ingredientCatalog.h" />
     <ClInclude Include="h\mainMenu.h" />

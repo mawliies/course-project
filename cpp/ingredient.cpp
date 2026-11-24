@@ -1,11 +1,23 @@
 #include "ingredient.h"
 #include "InvalidDataException.h"
 #include <iostream>
-Ingredient::Ingredient(std::string name, const NutritionValue& nutritionPer100, MeasureUnit unit) : name(name), nutritionPer100(nutritionPer100), unit(unit) {
+Ingredient::Ingredient(std::string name, const NutritionValue& nutritionPer100, MeasureUnit unit) : name(name), nutritionPer100(nutritionPer100), unit(unit), id(0) {
 	if (name.empty())
 		throw InvalidDataException("Ingredient name cannot be empty");
 	if (unit != MeasureUnit::gram && unit != MeasureUnit::milliliter)
 		throw InvalidDataException("Invalid ingredient measure unit");
+}
+Ingredient::Ingredient(int id, std::string name, const NutritionValue& nutritionPer100, MeasureUnit unit) : name(name), nutritionPer100(nutritionPer100), unit(unit), id(id) {
+	if (id <= 0)
+		throw InvalidDataException("Invalid ingredient ID");
+	if (name.empty())
+		throw InvalidDataException("Ingredient name cannot be empty");
+	if (unit != MeasureUnit::gram &&
+		unit != MeasureUnit::milliliter)
+		throw InvalidDataException("Invalid ingredient measure unit");
+}
+int Ingredient::getId() const {
+	return id;
 }
 std::string Ingredient::getName() const{
 	return this->name;
@@ -24,6 +36,4 @@ std::ostream& operator<<(std::ostream& os, const Ingredient& object) {
 	os << "\nNutrition Value: " << object.getNutrition();
 	return os;
 }
-Ingredient::~Ingredient() {
-	std::cout << this->getName() << " have been deleted from ingredient's list.\n";
-}
+Ingredient::~Ingredient() {}

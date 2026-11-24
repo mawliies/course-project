@@ -11,6 +11,9 @@ void Order::addItem(const MenuObject& object, int amount) {
 	newItem.priceAtOrder = object.getPrice();
 	items.push_back(newItem);
 }
+const std::vector<OrderItem>& Order::getItems()const {
+	return this->items;
+}
 void Order::removeItem(std::string name) {
 	for(int i=0;i<items.size();i++)
 		if (items[i].name == name) {
@@ -18,6 +21,16 @@ void Order::removeItem(std::string name) {
 			return;
 		}
 	throw NotFoundException(name);
+}
+void Order::restore(const OrderItem& item) {
+	if (item.name.empty())
+		throw InvalidDataException("Order item name cannot be empty");
+	if (item.amount <= 0)
+		throw InvalidAmountException("Order item amount must be positive");
+	if (item.priceAtOrder <= 0)
+		throw InvalidPriceException(std::to_string(item.priceAtOrder));
+
+	items.push_back(item);
 }
 float Order::calculateTotal()const {
 	float total = 0;

@@ -24,8 +24,10 @@ private:
 	OrderStatus status;
 public:
 	Order(const std::string& clientPhoneNumber, OrderStatus status = OrderStatus::Draft);
+	const std::vector<OrderItem>& getItems()const;
 	void addItem(const MenuObject& object, int amount);
 	void removeItem(std::string name);
+	void restore(const OrderItem& item);
 	float calculateTotal()const;
 	std::string getClientPhoneNumber() const;
 	OrderStatus getStatus()const;

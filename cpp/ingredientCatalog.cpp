@@ -5,22 +5,55 @@ IngredientCatalog::IngredientCatalog() {}
 IngredientCatalog& IngredientCatalog::operator+=(const Ingredient& ingredient) {
 	if (findByName(ingredient.getName()) != nullptr) 
 		throw DuplicateDataException(ingredient.getName());
-	this->ingredients.push_back(ingredient);
+	Ingredient newIngredient = ingredient;
+
+	if (newIngredient.id == 0) 
+		newIngredient.id = nextId++;
+	else {
+		if (newIngredient.id < 0)
+			throw InvalidDataException("Invalid ingredient ID");
+		if (findById(newIngredient.id) != nullptr)
+			throw DuplicateDataException("Duplicate ingredient ID: " + std::to_string(newIngredient.id));
+		if (newIngredient.id >= nextId)
+			nextId = newIngredient.id + 1;
+	}
+	ingredients.push_back(newIngredient);
 	return *this;
+}
+const std::vector<Ingredient>& IngredientCatalog::getAll() const {
+	return this->ingredients;
+}
+int IngredientCatalog::getNextId()const {
+	return this->nextId;
+}
+void IngredientCatalog::setNextId(int nextId) {
+	if (nextId <= 0)
+		throw InvalidDataException("Invalid next ingredient ID");
+
+	for (int i = 0; i < ingredients.size(); i++) {
+		if (ingredients[i].getId() >= nextId)
+			throw InvalidDataException("Invalid next ingredient ID");
+	}
+	this->nextId = nextId;
 }
 IngredientCatalog& IngredientCatalog::operator-=(const Ingredient& ingredient) {
 	std::string name = ingredient.getName();
 	for (int i = 0; i < (ingredients.size()); i++)
 		if (ingredients[i].getName() == name) {
 			ingredients.erase(ingredients.begin() + i);
-			break;
+			return *this;
 		}
-	return *this;
 	throw NotFoundException(name);
 }
 const Ingredient* IngredientCatalog::findByName(std::string name) const{
 	for (int i = 0; i < ingredients.size(); i++) 
 		if (ingredients[i].getName() == name) 
+			return &ingredients[i];
+	return nullptr;
+}
+const Ingredient* IngredientCatalog::findById(int id) const {
+	for (int i = 0; i < ingredients.size(); i++) 
+		if (ingredients[i].getId() == id)
 			return &ingredients[i];
 	return nullptr;
 }
@@ -56,6 +89,5 @@ void IngredientCatalog::printAll() const {
 		ingredients[i].printInfo();
 }
 IngredientCatalog::~IngredientCatalog() {
-	ingredients.clear();
 	std::cout << "Ingredient catalog have been successfully deleted.\n";
 }

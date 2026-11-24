@@ -33,7 +33,7 @@ std::istream& operator>>(std::istream& is, NutritionValue& nutrition) {
     return is;
 }
 std::ostream& operator<<(std::ostream& os, const NutritionValue& value) {
-    os << value.calories << " cal / " << value.protein << " / " << value.fats << " / " << value.carbs;
+    os << value.calories << "cal / " << value.protein << " / " << value.fats << " / " << value.carbs;
     return os;
 }
 NutritionValue::~NutritionValue() {}

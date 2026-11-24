@@ -2,6 +2,29 @@
 #include "AllExceptions.h"
 RestaurantManager::RestaurantManager(){}
 
+const IngredientCatalog& RestaurantManager::getCatalog()const {
+	return this->catalog;
+}
+const MainMenu& RestaurantManager::getMainMenu()const {
+	return this->mainMenu;
+}
+const SeasonalMenu& RestaurantManager::getSeasonalMenu()const {
+	return this->seasonalMenu;
+}
+const Collection<Person*>& RestaurantManager::getPeople()const {
+	return this->people;
+}
+const std::vector<Order>& RestaurantManager::getOrders()const {
+	return this->orders;
+}
+void RestaurantManager::setNextIngredientId(int nextId) {
+	catalog.setNextId(nextId);
+}
+
+
+
+
+
 void RestaurantManager::addPerson(Person* person) {
 	if (person == nullptr)
 		throw InvalidDataException("Cannot add null person");
@@ -41,6 +64,27 @@ void RestaurantManager::addIngredient(const Ingredient& ingredient) {
 	catalog += ingredient;
 }
 void RestaurantManager::removeIngredient(const std::string& name) {
+	const Ingredient* ingredient = catalog.findByName(name);
+
+	if (ingredient == nullptr)
+		throw NotFoundException(name);
+
+	int ingredientId = ingredient->getId();
+
+	std::vector<const MenuObject*> mainItems = mainMenu.getItems();
+	for (int i = 0; i < mainItems.size(); i++) {
+		const std::vector<RecipeIngredient>& recipeIngredients = mainItems[i]->getRecipe().getIngredients();
+		for (int j = 0; j < recipeIngredients.size(); j++)
+			if (recipeIngredients[j].ingredientId == ingredientId)
+				throw InvalidOperationException("Cannot remove ingredient: it is used in menu item " + mainItems[i]->getTitle());
+	}
+	std::vector<const MenuObject*> seasonalItems = seasonalMenu.getItems();
+	for (int i = 0; i < seasonalItems.size(); i++) {
+		const std::vector<RecipeIngredient>& recipeIngredients = seasonalItems[i]->getRecipe().getIngredients();
+		for (int j = 0; j < recipeIngredients.size(); j++)
+			if (recipeIngredients[j].ingredientId == ingredientId)
+				throw InvalidOperationException("Cannot remove ingredient: it is used in menu item " + seasonalItems[i]->getTitle());
+	}
 	catalog.removeIngredient(name);
 }
 const Ingredient* RestaurantManager::findIngredient(const std::string& name) const {
@@ -55,14 +99,15 @@ void RestaurantManager::printIngredients() const {
 
 
 void RestaurantManager::addToMainMenu(MenuObject* object) {
-	if (object != nullptr && seasonalMenu.findInMenu(object->getTitle()) == object)
+	if (object != nullptr && seasonalMenu.findInMenu(object->getTitle()) != nullptr)
 		throw DuplicateDataException("Object already belongs to seasonal menu: " + object->getTitle());
 
 	mainMenu.addToMenu(object);
 }
 void RestaurantManager::addToSeasonalMenu(MenuObject* object) {
-	if (object != nullptr && seasonalMenu.findInMenu(object->getTitle()) == object)
+	if (object != nullptr && mainMenu.findInMenu(object->getTitle()) != nullptr)
 		throw DuplicateDataException("Object already belongs to main menu: " + object->getTitle());
+
 	seasonalMenu.addToMenu(object);
 }
 void RestaurantManager::removeFromMainMenu(const std::string& name) {
@@ -115,6 +160,16 @@ void RestaurantManager::setSeasonalMenuPeriod(int ddBegin, int mmBegin, int yyyy
 			seasonalMenu.setEndDate(ddEnd, mmEnd, yyyyEnd);
 		}
 	}
+}
+std::vector<const MenuObject*> RestaurantManager::getAvailableMenuItems() const {
+	std::vector<const MenuObject*> result = mainMenu.getItems();
+
+	if (seasonalMenu.isAvailable()) {
+		std::vector<const MenuObject*> seasonalItems = seasonalMenu.getItems();
+		result.insert(result.end(), seasonalItems.begin(), seasonalItems.end());
+	}
+
+	return result;
 }
 
 
