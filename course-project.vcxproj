@@ -138,8 +138,11 @@
     <ClCompile Include="cpp\mainMenu.cpp" />
     <ClCompile Include="cpp\menu.cpp" />
     <ClCompile Include="cpp\menuObject.cpp" />
+    <ClCompile Include="cpp\nutritionAdvisorcpp.cpp" />
+    <ClCompile Include="cpp\nutritionRequest.cpp" />
     <ClCompile Include="cpp\nutritionValue.cpp" />
     <ClCompile Include="cpp\order.cpp" />
+    <ClCompile Include="cpp\orderBuilder.cpp" />
     <ClCompile Include="cpp\person.cpp" />
     <ClCompile Include="cpp\recipe.cpp" />
     <ClCompile Include="cpp\restaurantManager.cpp" />
@@ -170,8 +173,11 @@
     <ClInclude Include="h\measureUnit.h" />
     <ClInclude Include="h\menu.h" />
     <ClInclude Include="h\menuObject.h" />
+    <ClInclude Include="h\nutritionAdvisor.h" />
+    <ClInclude Include="h\nutritionRequest.h" />
     <ClInclude Include="h\nutritionValue.h" />
     <ClInclude Include="h\order.h" />
+    <ClInclude Include="h\orderBuilder.h" />
     <ClInclude Include="h\person.h" />
     <ClInclude Include="h\recipe.h" />
     <ClInclude Include="h\restaurantManager.h" />
