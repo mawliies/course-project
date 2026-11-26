@@ -41,8 +41,13 @@ Person* RestaurantManager::findPerson(const std::string& phoneNumber) {
 }
 void RestaurantManager::removePerson(const std::string& phoneNumber) {
 	Person* current = findPerson(phoneNumber);
+
 	if (current == nullptr)
 		throw NotFoundException(phoneNumber);
+	for (const Order& order : orders) 
+		if (order.getClientPhoneNumber() == phoneNumber) 
+			throw InvalidOperationException("Cannot remove client who has existing orders");
+	
 	for (int i = 0; i < people.getSize(); i++)
 		if (people.get(i) == current) {
 			people.removeAt(i);
@@ -178,17 +183,19 @@ std::vector<const MenuObject*> RestaurantManager::getAvailableMenuItems() const 
 
 void RestaurantManager::addOrder(const Order& order) {
 	Person* person = findPerson(order.getClientPhoneNumber());
-
 	if (person == nullptr)
 		throw NotFoundException("Client: " + order.getClientPhoneNumber());
 	if (dynamic_cast<Client*>(person) == nullptr)
 		throw InvalidOperationException("Only clients can have orders");
-
+	if (order.hasAssignedTable())
+		throw InvalidOperationException("Add the order first, then assign a table through RestaurantManager");
 	orders.push_back(order);
 }
 void RestaurantManager::removeOrder(int index) {
 	if (index < 0 || index >= static_cast<int>(orders.size()))
 		throw OutOfRangeException(index, static_cast<int>(orders.size()));
+	if (orders[index].hasAssignedTable())
+		releaseTableFromOrder(index);
 	orders.erase(orders.begin() + index);
 }
 Order& RestaurantManager::findOrder(int index) {
@@ -213,13 +220,72 @@ float RestaurantManager::calculateOrderTotal(int orderIndex) const {
 	return findOrder(orderIndex).calculateTotal();
 }
 void RestaurantManager::setOrderStatus(int orderIndex, OrderStatus status) {
-	findOrder(orderIndex).setStatus(status);
+	Order& order = findOrder(orderIndex);
+	const OrderStatus current = order.getStatus();
+	const bool allowed =
+		(current == OrderStatus::Draft && status == OrderStatus::New) ||
+		(current == OrderStatus::New && (status == OrderStatus::Preparing || status == OrderStatus::Cancelled)) ||
+		(current == OrderStatus::Preparing && (status == OrderStatus::Ready || status == OrderStatus::Cancelled)) ||
+		(current == OrderStatus::Ready && (status == OrderStatus::Served || status == OrderStatus::Cancelled));
+	if (!allowed)
+		throw InvalidOperationException("Invalid order status transition. Allowed workflow: New -> Preparing -> Ready -> Served. New, Preparing or Ready orders may be cancelled.");
+	if (status == OrderStatus::Served || status == OrderStatus::Cancelled)
+		releaseTableFromOrder(orderIndex);
+	order.setStatus(status);
 }
 OrderStatus RestaurantManager::getOrderStatus(int orderIndex) const {
 	return findOrder(orderIndex).getStatus();
 }
 int RestaurantManager::getOrdersCount() const {
 	return orders.size();
+}
+
+
+
+
+
+const DiningRoom& RestaurantManager::getDiningRoom() const {
+	return diningRoom;
+}
+void RestaurantManager::addTable(int number, int capacity) {
+	diningRoom.addTable(number, capacity);
+}
+void RestaurantManager::removeTable(int number) {
+	diningRoom.removeTable(number);
+}
+const DiningTable* RestaurantManager::findTable(int number) const {
+	return diningRoom.findTable(number);
+}
+const DiningTable* RestaurantManager::findAvailableTable(int guestCount) const {
+	return diningRoom.findAvailableTable(guestCount);
+}
+void RestaurantManager::assignTableToOrder(int orderIndex,int tableNumber) {
+	Order& order = findOrder(orderIndex);
+	if (order.hasAssignedTable())
+		throw InvalidOperationException("Order already has an assigned table");
+	if (order.getStatus() == OrderStatus::Served || order.getStatus() == OrderStatus::Cancelled) 
+		throw InvalidOperationException("Cannot assign a table to a closed order");
+	diningRoom.occupyTable(tableNumber, order.getGuestCount());
+	order.setTableNumber(tableNumber);
+}
+int RestaurantManager::assignAvailableTableToOrder(int orderIndex) {
+	Order& order = findOrder(orderIndex);
+	if (order.hasAssignedTable())
+		throw InvalidOperationException("Order already has an assigned table");
+	const DiningTable* table = diningRoom.findAvailableTable(order.getGuestCount());
+	if (table == nullptr)
+		throw NotFoundException("No available table for this party size");
+	const int tableNumber = table->getNumber();
+	assignTableToOrder(orderIndex, tableNumber);
+	return tableNumber;
+}
+void RestaurantManager::releaseTableFromOrder(int orderIndex) {
+	Order& order = findOrder(orderIndex);
+	if (!order.hasAssignedTable())
+		return;
+	const int tableNumber = order.getTableNumber();
+	diningRoom.releaseTable(tableNumber);
+	order.setTableNumber(0);
 }
 
 

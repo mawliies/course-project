@@ -149,13 +149,12 @@ std::vector<OrderRecommendation> OrderBuilder::buildRecommendations(const Restau
     return results;
 }
 
-Order OrderBuilder::createOrder(const OrderRecommendation& recommendation, const std::string& clientPhoneNumber) const {
+Order OrderBuilder::createOrder(const OrderRecommendation& recommendation, const std::string& clientPhoneNumber, int guestCount) const {
     if (clientPhoneNumber.empty())
         throw InvalidDataException("Client phone number cannot be empty");
-
     if (recommendation.getItems().empty())
         throw InvalidOperationException("Cannot create order from empty recommendation");
-    Order order(clientPhoneNumber, OrderStatus::Draft);
+    Order order(clientPhoneNumber, OrderStatus::Draft, guestCount);
     for (const OrderSelection& selection : recommendation.getItems()) {
         if (selection.object == nullptr)
             throw InvalidDataException("Null menu object in recommendation");
@@ -165,10 +164,10 @@ Order OrderBuilder::createOrder(const OrderRecommendation& recommendation, const
     }
     return order;
 }
-int OrderBuilder::confirmRecommendation(const std::vector<OrderRecommendation>& recommendations, std::size_t selectedIndex, const std::string& clientPhoneNumber, RestaurantManager& manager) const {
+int OrderBuilder::confirmRecommendation(const std::vector<OrderRecommendation>& recommendations, std::size_t selectedIndex, const std::string& clientPhoneNumber, RestaurantManager& manager, int guestCount) const {
     if (selectedIndex >= recommendations.size())
         throw InvalidDataException("Selected recommendation does not exist");
-    Order order = createOrder(recommendations[selectedIndex], clientPhoneNumber);
+    Order order = createOrder(recommendations[selectedIndex], clientPhoneNumber, guestCount);
     int orderIndex = manager.getOrdersCount();
     manager.addOrder(order);
     return orderIndex;

@@ -6,6 +6,7 @@
 #include"client.h"
 #include"employee.h"
 #include"order.h"
+#include "diningRoom.h"
 #include<vector>
 #include<iostream>
 #include<string>
@@ -14,6 +15,7 @@ private:
 	IngredientCatalog catalog;
 	MainMenu mainMenu;
 	SeasonalMenu seasonalMenu;
+	DiningRoom diningRoom;
 	Collection<Person*> people;
 	std::vector<Order> orders;
 public:
@@ -60,4 +62,13 @@ public:
 	void setOrderStatus(int orderIndex, OrderStatus status);
 	OrderStatus getOrderStatus(int orderIndex) const;
 	int getOrdersCount() const;
+
+	const DiningRoom& getDiningRoom() const;
+	void addTable(int number, int capacity);
+	void removeTable(int number);
+	const DiningTable* findTable(int number) const;
+	const DiningTable* findAvailableTable(int guestCount) const;
+	int assignAvailableTableToOrder(int orderIndex);
+	void assignTableToOrder(int orderIndex, int tableNumber);
+	void releaseTableFromOrder(int orderIndex);
 };

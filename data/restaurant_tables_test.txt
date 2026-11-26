@@ -1,0 +1,50 @@
+RESTAURANT_DATABASE
+VERSION 2
+INGREDIENTS
+2
+1
+1
+"Chicken"
+165 31 3.6 0
+0
+MAIN_MENU
+0 0 0
+1
+"Dish"
+"Chicken Meal"
+12.5
+"Main course"
+1
+1
+1 100 "Chicken"
+20 250
+SEASONAL_MENU
+0 0 0 0 0 0
+0
+DINING_ROOM
+3
+1 2
+2 4
+3 4
+PEOPLE
+1
+"Client"
+"Ivan"
+"Ivanov"
+"Ivanovich"
+"+375291111111"
+100
+ORDERS
+2
+"+375291111111"
+3
+3 0
+1
+"Chicken Meal"
+3 12.5
+"+375291111111"
+0
+4 3
+1
+"Chicken Meal"
+4 12.5

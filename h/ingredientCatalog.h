@@ -1,5 +1,5 @@
 #pragma once
-#include "Collection.h"
+#include "collection.h"
 #include "ingredient.h"
 #include<vector>
 class IngredientCatalog {

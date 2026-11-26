@@ -1,0 +1,10 @@
+﻿<RCC>
+	<qresource prefix="/styles">
+		<file alias="arcanum.qss">resources/styles/arcanum.qss</file>
+	</qresource>
+
+	<qresource prefix="/images">
+		<file alias="arcanum_emblem.png">resources/images/arcanum_emblem.png</file>
+		<file alias="celestial_background.jpg">resources/images/celestial_background.jpg</file>
+	</qresource>
+</RCC>

@@ -1,0 +1,504 @@
+========================================
+         RESTAURANT REPORT
+========================================
+Generated: 2026-11-26 15:45:50
+
+========================================
+          INGREDIENT CATALOG
+========================================
+Total ingredients: 18
+Next available ID: 19
+
+ID: 1
+Name: Beef
+Unit: g
+Nutrition per 100 units:
+  Calories: 250.00
+  Proteins: 26.00
+  Fats: 17.00
+  Carbs: 0.00
+----------------------------------------
+ID: 2
+Name: Potato
+Unit: g
+Nutrition per 100 units:
+  Calories: 77.00
+  Proteins: 2.00
+  Fats: 0.10
+  Carbs: 17.00
+----------------------------------------
+ID: 3
+Name: Mushroom
+Unit: g
+Nutrition per 100 units:
+  Calories: 22.00
+  Proteins: 3.10
+  Fats: 0.30
+  Carbs: 3.30
+----------------------------------------
+ID: 4
+Name: Cream
+Unit: ml
+Nutrition per 100 units:
+  Calories: 206.00
+  Proteins: 2.10
+  Fats: 22.00
+  Carbs: 3.10
+----------------------------------------
+ID: 5
+Name: Chicken
+Unit: g
+Nutrition per 100 units:
+  Calories: 165.00
+  Proteins: 31.00
+  Fats: 3.60
+  Carbs: 0.00
+----------------------------------------
+ID: 6
+Name: Tomato
+Unit: g
+Nutrition per 100 units:
+  Calories: 18.00
+  Proteins: 0.90
+  Fats: 0.20
+  Carbs: 3.90
+----------------------------------------
+ID: 7
+Name: Cheese
+Unit: g
+Nutrition per 100 units:
+  Calories: 402.00
+  Proteins: 25.00
+  Fats: 33.00
+  Carbs: 1.30
+----------------------------------------
+ID: 8
+Name: Pasta
+Unit: g
+Nutrition per 100 units:
+  Calories: 371.00
+  Proteins: 13.00
+  Fats: 1.50
+  Carbs: 75.00
+----------------------------------------
+ID: 9
+Name: Lemon
+Unit: g
+Nutrition per 100 units:
+  Calories: 29.00
+  Proteins: 1.10
+  Fats: 0.30
+  Carbs: 9.30
+----------------------------------------
+ID: 10
+Name: Mint
+Unit: g
+Nutrition per 100 units:
+  Calories: 44.00
+  Proteins: 3.30
+  Fats: 0.70
+  Carbs: 8.40
+----------------------------------------
+ID: 11
+Name: Water
+Unit: ml
+Nutrition per 100 units:
+  Calories: 0.00
+  Proteins: 0.00
+  Fats: 0.00
+  Carbs: 0.00
+----------------------------------------
+ID: 12
+Name: Coffee
+Unit: ml
+Nutrition per 100 units:
+  Calories: 1.00
+  Proteins: 0.10
+  Fats: 0.00
+  Carbs: 0.00
+----------------------------------------
+ID: 13
+Name: Milk
+Unit: ml
+Nutrition per 100 units:
+  Calories: 61.00
+  Proteins: 3.20
+  Fats: 3.30
+  Carbs: 4.80
+----------------------------------------
+ID: 14
+Name: Cocoa
+Unit: g
+Nutrition per 100 units:
+  Calories: 228.00
+  Proteins: 19.60
+  Fats: 13.70
+  Carbs: 57.90
+----------------------------------------
+ID: 15
+Name: Sugar
+Unit: g
+Nutrition per 100 units:
+  Calories: 387.00
+  Proteins: 0.00
+  Fats: 0.00
+  Carbs: 100.00
+----------------------------------------
+ID: 16
+Name: Flour
+Unit: g
+Nutrition per 100 units:
+  Calories: 364.00
+  Proteins: 10.00
+  Fats: 1.00
+  Carbs: 76.00
+----------------------------------------
+ID: 17
+Name: Butter
+Unit: g
+Nutrition per 100 units:
+  Calories: 717.00
+  Proteins: 0.90
+  Fats: 81.10
+  Carbs: 0.10
+----------------------------------------
+ID: 18
+Name: Onion
+Unit: g
+Nutrition per 100 units:
+  Calories: 40.00
+  Proteins: 1.10
+  Fats: 0.10
+  Carbs: 9.30
+----------------------------------------
+
+========================================
+              MAIN MENU
+========================================
+Last update: 26.11.2026
+
+========================================
+            SEASONAL MENU
+========================================
+Period: 1.11.2026 - 31.12.2027
+Currently available: Yes
+
+Main menu items:
+Total items: 10
+
+Type: Dish
+Name: Solar Steak
+Category: Main Courses
+Price: 24.90
+Cooking time: 25 min
+Weight: 320 g
+Recipe portions: 1
+Recipe ingredients:
+  Beef (ID: 1) - 180.00
+  Potato (ID: 2) - 120.00
+  Butter (ID: 17) - 10.00
+  Onion (ID: 18) - 20.00
+----------------------------------------
+Type: Dish
+Name: Risotto «Eclipse»
+Category: Main Courses
+Price: 18.50
+Cooking time: 20 min
+Weight: 300 g
+Recipe portions: 1
+Recipe ingredients:
+  Pasta (ID: 8) - 80.00
+  Mushroom (ID: 3) - 100.00
+  Cream (ID: 4) - 60.00
+  Cheese (ID: 7) - 20.00
+----------------------------------------
+Type: Dish
+Name: Milky Way Pasta
+Category: Main Courses
+Price: 19.90
+Cooking time: 22 min
+Weight: 330 g
+Recipe portions: 1
+Recipe ingredients:
+  Chicken (ID: 5) - 120.00
+  Tomato (ID: 6) - 60.00
+  Cheese (ID: 7) - 25.00
+  Pasta (ID: 8) - 90.00
+----------------------------------------
+Type: Dish
+Name: Moonlight Cream Soup
+Category: Soups
+Price: 12.50
+Cooking time: 18 min
+Weight: 300 g
+Recipe portions: 1
+Recipe ingredients:
+  Potato (ID: 2) - 140.00
+  Mushroom (ID: 3) - 70.00
+  Cream (ID: 4) - 80.00
+  Onion (ID: 18) - 20.00
+----------------------------------------
+Type: Dish
+Name: Stardust Tart
+Category: Desserts
+Price: 9.90
+Cooking time: 15 min
+Weight: 130 g
+Recipe portions: 1
+Recipe ingredients:
+  Flour (ID: 16) - 50.00
+  Sugar (ID: 15) - 25.00
+  Butter (ID: 17) - 20.00
+  Milk (ID: 13) - 30.00
+  Cocoa (ID: 14) - 10.00
+----------------------------------------
+Type: Dish
+Name: Polaris Salad
+Category: Appetizers
+Price: 14.50
+Cooking time: 12 min
+Weight: 200 g
+Recipe portions: 1
+Recipe ingredients:
+  Chicken (ID: 5) - 90.00
+  Tomato (ID: 6) - 80.00
+  Cheese (ID: 7) - 20.00
+  Onion (ID: 18) - 10.00
+----------------------------------------
+Type: Drink
+Name: Lunar Eclipse
+Category: Signature Drinks
+Price: 7.90
+Volume: 300 ml
+Temperature: Cold
+Recipe portions: 1
+Recipe ingredients:
+  Lemon (ID: 9) - 35.00
+  Mint (ID: 10) - 4.00
+  Water (ID: 11) - 200.00
+  Sugar (ID: 15) - 15.00
+----------------------------------------
+Type: Drink
+Name: Celestial Latte
+Category: Coffee
+Price: 6.90
+Volume: 250 ml
+Temperature: Hot
+Recipe portions: 1
+Recipe ingredients:
+  Coffee (ID: 12) - 40.00
+  Milk (ID: 13) - 180.00
+  Sugar (ID: 15) - 8.00
+----------------------------------------
+Type: Drink
+Name: Dark Matter
+Category: Signature Drinks
+Price: 7.50
+Volume: 250 ml
+Temperature: Hot
+Recipe portions: 1
+Recipe ingredients:
+  Cocoa (ID: 14) - 18.00
+  Milk (ID: 13) - 200.00
+  Sugar (ID: 15) - 12.00
+----------------------------------------
+Type: Drink
+Name: Comet
+Category: Signature Drinks
+Price: 6.50
+Volume: 300 ml
+Temperature: Cold
+Recipe portions: 1
+Recipe ingredients:
+  Lemon (ID: 9) - 25.00
+  Water (ID: 11) - 220.00
+  Mint (ID: 10) - 3.00
+  Sugar (ID: 15) - 10.00
+----------------------------------------
+
+Seasonal menu items:
+Total items: 2
+
+Type: Drink
+Name: Northern Lights
+Category: Seasonal Drinks
+Price: 8.50
+Volume: 350 ml
+Temperature: Cold
+Recipe portions: 1
+Recipe ingredients:
+  Lemon (ID: 9) - 30.00
+  Mint (ID: 10) - 5.00
+  Water (ID: 11) - 240.00
+  Sugar (ID: 15) - 18.00
+----------------------------------------
+Type: Dish
+Name: Winter Solstice
+Category: Seasonal Desserts
+Price: 10.50
+Cooking time: 15 min
+Weight: 140 g
+Recipe portions: 1
+Recipe ingredients:
+  Flour (ID: 16) - 35.00
+  Cocoa (ID: 14) - 15.00
+  Sugar (ID: 15) - 15.00
+  Butter (ID: 17) - 20.00
+  Milk (ID: 13) - 30.00
+----------------------------------------
+
+========================================
+              DINING ROOM
+========================================
+Total tables: 8
+Available tables: 6
+Occupied tables: 2
+
+Table #1
+Capacity: 2
+Occupied seats: 0
+Status: Available
+----------------------------------------
+Table #2
+Capacity: 2
+Occupied seats: 0
+Status: Available
+----------------------------------------
+Table #3
+Capacity: 4
+Occupied seats: 3
+Status: Occupied
+----------------------------------------
+Table #4
+Capacity: 4
+Occupied seats: 4
+Status: Occupied
+----------------------------------------
+Table #5
+Capacity: 4
+Occupied seats: 0
+Status: Available
+----------------------------------------
+Table #6
+Capacity: 6
+Occupied seats: 0
+Status: Available
+----------------------------------------
+Table #7
+Capacity: 8
+Occupied seats: 0
+Status: Available
+----------------------------------------
+Table #8
+Capacity: 12
+Occupied seats: 0
+Status: Available
+----------------------------------------
+
+========================================
+                PEOPLE
+========================================
+Total people: 4
+
+
+Name: Lipai Ann Alexandrovna
+Phone number: +375337778899
+Bonus point: 74
+
+
+Name: Zhvirblia Daria
+Phone number: +375293953788
+Bonus point: 0
+
+
+Name: TEST Test 123
+Phone number: +375333953488
+Bonus point: 0
+
+
+Name: aa aaa a
+Phone number: +375333333333
+Bonus point: 0
+
+
+========================================
+                ORDERS
+========================================
+Total orders: 4
+
+Order #1
+Client phone: +375293953788
+Status: Served
+Items:
+  Solar Steak
+    Amount: 2
+    Price at order: 24.90
+    Subtotal: 49.80
+  Moonlight Cream Soup
+    Amount: 2
+    Price at order: 12.50
+    Subtotal: 25.00
+Subtotal: 74.80
+Loyalty points redeemed: 0
+Loyalty discount: 0.00
+Amount due: 74.80
+----------------------------------------
+Order #2
+Client phone: +375293953788
+Status: Cancelled
+Items:
+  Comet
+    Amount: 1
+    Price at order: 6.50
+    Subtotal: 6.50
+  Northern Lights
+    Amount: 1
+    Price at order: 8.50
+    Subtotal: 8.50
+Subtotal: 15.00
+Loyalty points redeemed: 0
+Loyalty discount: 0.00
+Amount due: 15.00
+----------------------------------------
+Order #3
+Client phone: +375293953788
+Status: Preparing
+Items:
+  Solar Steak
+    Amount: 1
+    Price at order: 24.90
+    Subtotal: 24.90
+  Milky Way Pasta
+    Amount: 1
+    Price at order: 19.90
+    Subtotal: 19.90
+  Winter Solstice
+    Amount: 1
+    Price at order: 10.50
+    Subtotal: 10.50
+Subtotal: 55.30
+Loyalty points redeemed: 0
+Loyalty discount: 0.00
+Amount due: 55.30
+----------------------------------------
+Order #4
+Client phone: +375333953488
+Status: Ready
+Items:
+  Milky Way Pasta
+    Amount: 3
+    Price at order: 19.90
+    Subtotal: 59.70
+  Dark Matter
+    Amount: 2
+    Price at order: 7.50
+    Subtotal: 15.00
+  Comet
+    Amount: 4
+    Price at order: 6.50
+    Subtotal: 26.00
+Subtotal: 100.70
+Loyalty points redeemed: 0
+Loyalty discount: 0.00
+Amount due: 100.70
+----------------------------------------

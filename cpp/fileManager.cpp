@@ -6,12 +6,13 @@
 #include "employee.h"
 #include "AllExceptions.h"
 #include <iomanip>
+#include <limits>
 #include <fstream>
 
 FileManager::FileManager( const std::string& databaseFile,const std::string& logFile,const std::string& reportFile) : databaseFile(databaseFile),logFile(logFile),reportFile(reportFile) {}
 void FileManager::writeHeader(std::ofstream& file) const {
     file << "RESTAURANT_DATABASE\n";
-    file << "VERSION 1\n";
+    file << "VERSION 3\n";
 }
 void FileManager::writeIngredients(std::ofstream& file, const IngredientCatalog& catalog) const {
     const auto& ingredients = catalog.getAll();
@@ -105,6 +106,8 @@ void FileManager::writeOrders(std::ofstream& file, const std::vector<Order>& ord
     for (const Order& order : orders) {
         file << std::quoted(order.getClientPhoneNumber()) << '\n';
         file << static_cast<int>(order.getStatus()) << '\n';
+        file << order.getGuestCount() << ' ' << order.getTableNumber() << '\n';
+        file << order.getLoyaltyDiscount() << ' ' << order.getRedeemedBonusPoints() << '\n';
         const auto& items = order.getItems();
         file << items.size() << '\n';
 
@@ -114,19 +117,30 @@ void FileManager::writeOrders(std::ofstream& file, const std::vector<Order>& ord
         }
     }
 }
-
+void FileManager::writeDiningRoom(std::ofstream& file, const DiningRoom& diningRoom) const {
+    file << "DINING_ROOM\n";
+    const auto& tables = diningRoom.getTables();
+    file << tables.size() << '\n';
+    for (const auto& entry : tables) 
+        file << entry.second.getNumber() << ' '<< entry.second.getCapacity() << '\n';
+}
 void FileManager::saveDatabase(const RestaurantManager& manager) const {
     std::ofstream file(databaseFile);
 
     if (!file.is_open())
         throw InvalidOperationException("Cannot open database file for writing: " + databaseFile);
 
+    // Preserve exact floating-point values for recipe nutrition, historical
+    // prices and loyalty discounts across save/load cycles.
+    file << std::setprecision(std::numeric_limits<float>::max_digits10);
     writeHeader(file);
     writeIngredients(file, manager.getCatalog());
     writeMainMenu(file, manager.getMainMenu());
     writeSeasonalMenu(file, manager.getSeasonalMenu());
+    writeDiningRoom(file, manager.getDiningRoom());
     writePeople(file, manager.getPeople());
     writeOrders(file, manager.getOrders());
+    
 
     file.flush();
     if (!file)
@@ -135,15 +149,16 @@ void FileManager::saveDatabase(const RestaurantManager& manager) const {
     if (file.fail())
         throw InvalidOperationException("Error while closing database file");
 }
-void FileManager::readHeader(std::ifstream& file) const {
+int FileManager::readHeader(std::ifstream& file) const {
     std::string header;
     std::string versionLabel;
     int version;
 
     if (!(file >> header >> versionLabel >> version))
         throw InvalidDataException("Cannot read database header");
-    if (header != "RESTAURANT_DATABASE" || versionLabel != "VERSION" || version != 1)
+    if (header != "RESTAURANT_DATABASE" || versionLabel != "VERSION" || (version < 1 || version > 3))
         throw InvalidDataException("Invalid database format or version");
+    return version;
 }
 void FileManager::readIngredients(std::ifstream& file, RestaurantManager& manager) const {
     std::string section;
@@ -309,7 +324,22 @@ void FileManager::readPeople(std::ifstream& file,RestaurantManager& manager) con
         }
     }
 }
-void FileManager::readOrders(std::ifstream& file, RestaurantManager& manager) const {
+void FileManager::readDiningRoom(std::ifstream& file,RestaurantManager& manager) const {
+    std::string section;
+    size_t count;
+    if (!(file >> section) || section != "DINING_ROOM")
+        throw InvalidDataException("Invalid dining room section");
+    if (!(file >> count))
+        throw InvalidDataException("Cannot read dining room table count");
+    for (size_t i = 0; i < count; i++) {
+        int number;
+        int capacity;
+        if (!(file >> number >> capacity))
+            throw InvalidDataException("Cannot read dining table information");
+        manager.addTable(number, capacity);
+    }
+}
+void FileManager::readOrders(std::ifstream& file, RestaurantManager& manager, int version) const {
     std::string section;
     size_t count;
 
@@ -322,19 +352,40 @@ void FileManager::readOrders(std::ifstream& file, RestaurantManager& manager) co
         int statusValue;
         if (!(file >> std::quoted(clientPhoneNumber) >> statusValue))
             throw InvalidDataException("Cannot read order information");
-        if (statusValue < 0 || statusValue > 4)
+        if (statusValue < 0 || statusValue > 5)
             throw InvalidDataException("Invalid order status");
-        Order order(clientPhoneNumber,static_cast<OrderStatus>(statusValue));
+
+        int guestCount = 1;
+        int tableNumber = 0;
+        if (version >= 2) 
+            if (!(file >> guestCount >> tableNumber))
+                throw InvalidDataException("Cannot read order seating information");
+        if (guestCount <= 0 || tableNumber < 0)
+            throw InvalidDataException("Invalid order seating information");
+
+        float loyaltyDiscount = 0.0f;
+        int redeemedBonusPoints = 0;
+        if (version >= 3 && !(file >> loyaltyDiscount >> redeemedBonusPoints))
+            throw InvalidDataException("Cannot read order loyalty redemption");
+        if (loyaltyDiscount < 0.0f || redeemedBonusPoints < 0)
+            throw InvalidDataException("Invalid order loyalty redemption");
+
+        Order order(clientPhoneNumber,static_cast<OrderStatus>(statusValue), guestCount);
         size_t itemsCount;
         if (!(file >> itemsCount))
             throw InvalidDataException("Cannot read order items count");
         for (size_t j = 0; j < itemsCount; j++) {
             OrderItem item;
-            if (!(file >> std::quoted(item.name) >> item.amount >> item.priceAtOrder))
+            if (!(file >> std::quoted(item.name)>> item.amount >> item.priceAtOrder)) 
                 throw InvalidDataException("Cannot read order item");
             order.restore(item);
         }
+        if (version >= 3)
+            order.applyLoyaltyRedemption(redeemedBonusPoints, loyaltyDiscount);
+        const int orderIndex = manager.getOrdersCount();
         manager.addOrder(order);
+        if (tableNumber > 0)
+            manager.assignTableToOrder(orderIndex, tableNumber);
     }
 }
 void FileManager::loadDatabase(RestaurantManager& manager) const {
@@ -344,14 +395,16 @@ void FileManager::loadDatabase(RestaurantManager& manager) const {
     const MainMenu& mainMenu = manager.getMainMenu();
     const SeasonalMenu& seasonalMenu = manager.getSeasonalMenu();
 
-    if (!manager.getCatalog().getAll().empty() || !mainMenu.getItems().empty() || !seasonalMenu.getItems().empty() || manager.getPeople().getSize() != 0 || !manager.getOrders().empty() || mainMenu.getDay() != 0 || mainMenu.getMonth() != 0 || mainMenu.getYear() != 0 || seasonalMenu.getDayBegin() != 0 || seasonalMenu.getMonthBegin() != 0 || seasonalMenu.getYearBegin() != 0 || seasonalMenu.getDayEnd() != 0 || seasonalMenu.getMonthEnd() != 0 || seasonalMenu.getYearEnd() != 0)
+    if (!manager.getCatalog().getAll().empty() || !manager.getDiningRoom().getTables().empty() || !mainMenu.getItems().empty() || !seasonalMenu.getItems().empty() || manager.getPeople().getSize() != 0 || !manager.getOrders().empty() || mainMenu.getDay() != 0 || mainMenu.getMonth() != 0 || mainMenu.getYear() != 0 || seasonalMenu.getDayBegin() != 0 || seasonalMenu.getMonthBegin() != 0 || seasonalMenu.getYearBegin() != 0 || seasonalMenu.getDayEnd() != 0 || seasonalMenu.getMonthEnd() != 0 || seasonalMenu.getYearEnd() != 0)
         throw InvalidOperationException("Database must be loaded into an empty RestaurantManager");
-    readHeader(file);
+    const int version = readHeader(file);
     readIngredients(file, manager);
     readMainMenu(file, manager);
     readSeasonalMenu(file, manager);
+    if (version >= 2)
+        readDiningRoom(file, manager);
     readPeople(file, manager);
-    readOrders(file, manager);
+    readOrders(file, manager, version);
     file >> std::ws;
 
     if (file.peek() != std::char_traits<char>::eof())
@@ -477,6 +530,22 @@ void FileManager::generateReport(const RestaurantManager& manager) const {
     writeMenuItems(seasonalMenu);
 
     file << "\n========================================\n";
+    file << "              DINING ROOM\n";
+    file << "========================================\n";
+    const auto& tables = manager.getDiningRoom().getTables();
+    file << "Total tables: " << tables.size() << '\n';
+    file << "Available tables: "<< manager.getDiningRoom().getAvailableTableCount() << '\n';
+    file << "Occupied tables: " << manager.getDiningRoom().getOccupiedTableCount() << "\n\n";
+    for (const auto& entry : tables) {
+        const DiningTable& table = entry.second;
+        file << "Table #" << table.getNumber() << '\n';
+        file << "Capacity: " << table.getCapacity() << '\n';
+        file << "Occupied seats: " << table.getOccupiedSeats() << '\n';
+        file << "Status: " << (table.isAvailable() ? "Available" : "Occupied") << '\n';
+        file << "----------------------------------------\n";
+    }
+
+    file << "\n========================================\n";
     file << "                PEOPLE\n";
     file << "========================================\n";
     const Collection<Person*>& people = manager.getPeople();
@@ -510,6 +579,9 @@ void FileManager::generateReport(const RestaurantManager& manager) const {
         case OrderStatus::Cancelled:
             status = "Cancelled";
             break;
+        case OrderStatus::Preparing:
+            status = "Preparing";
+            break;
         default:
             throw InvalidDataException("Unknown order status");
         }
@@ -527,7 +599,10 @@ void FileManager::generateReport(const RestaurantManager& manager) const {
                 file << "    Price at order: " << item.priceAtOrder << '\n';
                 file << "    Subtotal: " << item.amount * item.priceAtOrder << '\n';
             }
-        file << "Order total: " << order.calculateTotal() << '\n';
+        file << "Subtotal: " << order.calculateTotal() << '\n';
+        file << "Loyalty points redeemed: " << order.getRedeemedBonusPoints() << '\n';
+        file << "Loyalty discount: " << order.getLoyaltyDiscount() << '\n';
+        file << "Amount due: " << order.calculatePayableTotal() << '\n';
         file << "----------------------------------------\n";
     }
 

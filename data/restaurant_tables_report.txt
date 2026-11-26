@@ -1,0 +1,109 @@
+========================================
+         RESTAURANT REPORT
+========================================
+Generated: 2026-11-25 22:38:04
+
+========================================
+          INGREDIENT CATALOG
+========================================
+Total ingredients: 1
+Next available ID: 2
+
+ID: 1
+Name: Chicken
+Unit: g
+Nutrition per 100 units:
+  Calories: 165.00
+  Proteins: 31.00
+  Fats: 3.60
+  Carbs: 0.00
+----------------------------------------
+
+========================================
+              MAIN MENU
+========================================
+Last update: 0.0.0
+
+========================================
+            SEASONAL MENU
+========================================
+Period: 0.0.0 - 0.0.0
+Currently available: No
+
+Main menu items:
+Total items: 1
+
+Type: Dish
+Name: Chicken Meal
+Category: Main course
+Price: 12.50
+Cooking time: 20 min
+Weight: 250 g
+Recipe portions: 1
+Recipe ingredients:
+  Chicken (ID: 1) - 100.00
+----------------------------------------
+
+Seasonal menu items:
+Total items: 0
+
+
+========================================
+              DINING ROOM
+========================================
+Total tables: 3
+Available tables: 3
+Occupied tables: 0
+
+Table #1
+Capacity: 2
+Occupied seats: 0
+Status: Available
+----------------------------------------
+Table #2
+Capacity: 4
+Occupied seats: 0
+Status: Available
+----------------------------------------
+Table #3
+Capacity: 4
+Occupied seats: 0
+Status: Available
+----------------------------------------
+
+========================================
+                PEOPLE
+========================================
+Total people: 1
+
+
+Name: Ivanov Ivan Ivanovich
+Phone number: +375291111111
+Bonus point: 100
+
+
+========================================
+                ORDERS
+========================================
+Total orders: 2
+
+Order #1
+Client phone: +375291111111
+Status: Served
+Items:
+  Chicken Meal
+    Amount: 3
+    Price at order: 12.50
+    Subtotal: 37.50
+Order total: 37.50
+----------------------------------------
+Order #2
+Client phone: +375291111111
+Status: Cancelled
+Items:
+  Chicken Meal
+    Amount: 4
+    Price at order: 12.50
+    Subtotal: 50.00
+Order total: 50.00
+----------------------------------------
